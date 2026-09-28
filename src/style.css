@@ -1,0 +1,325 @@
+:root{
+  color-scheme:dark;
+  --mc-dark: #121212;
+  --mc-panel: #262626;
+  --mc-border-light: #444444;
+  --mc-border-dark: #101010;
+  --mc-green: #55ff55;
+  --mc-gold: #ffaa00;
+  --mc-aqua: #55ffff;
+  --mc-red: #ff5555;
+}
+
+html,body,#app{
+  margin:0;width:100%;height:100%;overflow:hidden;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:#86c9ff;
+  user-select:none;
+}
+canvas{display:block}
+
+/* ---------- HUD MINECRAFT STYLE ---------- */
+#hud{
+  position:fixed;top:14px;left:14px;
+  padding:12px 16px;
+  background:rgba(20,20,20,0.85);
+  color:#fff;
+  border:2px solid #555;
+  border-top-color:#888;
+  border-left-color:#888;
+  border-right-color:#222;
+  border-bottom-color:#222;
+  border-radius:4px;
+  font-size:14px;line-height:1.55;
+  pointer-events:none;z-index:5;
+  box-shadow:2px 2px 8px rgba(0,0,0,0.6);
+  text-shadow:1px 1px 2px #000;
+}
+#hud strong{color:var(--mc-green)}
+.hint{color:#aaccff;font-size:12px;margin-top:4px;display:inline-block}
+
+#crosshair{
+  position:fixed;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  color:#fff;font-size:26px;font-weight:900;
+  text-shadow:0 0 3px #000, 1px 1px 2px #000;
+  pointer-events:none;z-index:6;
+}
+
+/* ---------- MENU PRINCIPAL ---------- */
+#menu{
+  position:fixed;inset:0;display:grid;place-items:center;
+  background:rgba(0,0,0,0.65);z-index:20;
+  backdrop-filter:blur(3px);
+}
+#menu.hidden{display:none}
+#panel{
+  width:min(720px,calc(100% - 32px));
+  background:#2b2b2b;
+  padding:24px;
+  border:3px solid #5c5c5c;
+  border-top-color:#8e8e8e;
+  border-left-color:#8e8e8e;
+  border-right-color:#141414;
+  border-bottom-color:#141414;
+  border-radius:6px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.8);
+}
+#panel h1{
+  margin:0 0 4px 0;
+  letter-spacing:3px;
+  font-size:28px;
+  color:#ffffff;
+  text-shadow:2px 2px 0px #3f3f3f, 3px 3px 0px #000;
+}
+.subtitle{
+  color:var(--mc-green);font-weight:900;margin:0 0 16px 0;letter-spacing:1px;
+}
+
+.mode-choice{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;
+}
+.mode-card{
+  display:flex;flex-direction:column;gap:6px;align-items:flex-start;text-align:left;
+  padding:14px;
+  border:2px solid #555;
+  border-top-color:#777;border-left-color:#777;
+  border-right-color:#222;border-bottom-color:#222;
+  background:#383838;color:white;cursor:pointer;
+  transition:transform 0.1s, background 0.15s;
+}
+.mode-card:hover{
+  background:#484848;transform:translateY(-2px);
+}
+.mode-card b{font-size:16px;color:#fff}
+.mode-card span{font-size:12px;color:#c0c0c0;line-height:1.4}
+.mode-card.active{
+  border-color:var(--mc-aqua);
+  background:rgba(85,255,255,0.18);
+  box-shadow:inset 0 0 0 2px var(--mc-aqua);
+}
+.mode-card.survival.active{
+  border-color:var(--mc-gold);
+  background:rgba(255,170,0,0.22);
+  box-shadow:inset 0 0 0 2px var(--mc-gold);
+}
+.mode-card.dino.active{
+  border-color:var(--mc-green);
+  background:rgba(85,255,85,0.2);
+  box-shadow:inset 0 0 0 2px var(--mc-green);
+}
+.mode-card.marvel.active{
+  border-color:var(--mc-red);
+  background:rgba(255,85,85,0.22);
+  box-shadow:inset 0 0 0 2px var(--mc-red);
+}
+
+.controls-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;text-align:left;margin:16px 0;
+}
+.controls-grid span{
+  background:rgba(0,0,0,0.35);padding:7px 10px;border-radius:4px;font-size:13px;
+  border:1px solid #444;
+}
+
+.menu-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+button{font:inherit;color:white;cursor:pointer}
+#panel button, .big-panel button{
+  padding:11px 14px;
+  border:2px solid #555;
+  border-top-color:#888;border-left-color:#888;
+  border-right-color:#222;border-bottom-color:#222;
+  background:#497a49;
+  font-weight:bold;
+  text-shadow:1px 1px 2px #000;
+}
+#panel button:hover, .big-panel button:hover{background:#589458}
+#panel button:active, .big-panel button:active{
+  border-top-color:#222;border-left-color:#222;
+  border-right-color:#888;border-bottom-color:#888;
+}
+
+/* ---------- HOTBAR MINECRAFT ---------- */
+#hotbar{
+  position:fixed;left:50%;bottom:16px;
+  transform:translateX(-50%);
+  display:flex;gap:3px;z-index:10;
+  background:rgba(20,20,20,0.8);
+  padding:4px;
+  border:2px solid #444;
+  border-radius:4px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.7);
+}
+.slot{
+  width:58px;height:58px;
+  border:2px solid #3a3a3a;
+  border-top-color:#222;border-left-color:#222;
+  border-right-color:#555;border-bottom-color:#555;
+  background:#262626;
+  display:grid;
+  grid-template-columns:26px 1fr;
+  grid-template-rows:28px 18px;
+  align-items:center;justify-items:center;
+  position:relative;
+  padding:2px;box-sizing:border-box;
+}
+.slot.selected{
+  border:3px solid #ffffff;
+  background:rgba(255,255,255,0.18);
+  transform:translateY(-4px) scale(1.06);
+  box-shadow:0 4px 10px rgba(0,0,0,0.6);
+}
+.swatch{
+  width:24px;height:24px;
+  border:1px solid #eee;
+  box-shadow:1px 1px 3px rgba(0,0,0,0.5);
+  image-rendering:pixelated;
+}
+.slot b{font-size:12px;text-shadow:1px 1px 2px #000}
+.slot small{
+  grid-column:1/3;font-size:9px;max-width:54px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:#ddd;text-shadow:1px 1px 1px #000;
+}
+.slot-count{
+  position:absolute;right:3px;bottom:2px;
+  font-size:13px;font-weight:900;color:#ffff55;
+  text-shadow:1px 1px 0px #000, 2px 2px 2px #000;
+  pointer-events:none;
+}
+
+/* ---------- MINIMAP ---------- */
+#minimap{
+  position:fixed;right:14px;top:14px;
+  width:180px;height:180px;
+  border:3px solid #666;
+  border-top-color:#999;border-left-color:#999;
+  border-right-color:#333;border-bottom-color:#333;
+  background:#111;
+  border-radius:4px;
+  z-index:7;
+  image-rendering:pixelated;
+  box-shadow:2px 2px 10px rgba(0,0,0,0.7);
+}
+
+/* ---------- MODAL & PANELS ---------- */
+#modal{
+  position:fixed;inset:0;display:grid;place-items:center;
+  background:rgba(0,0,0,0.68);z-index:40;
+  backdrop-filter:blur(3px);
+}
+#modal.hidden{display:none}
+.big-panel{
+  width:min(900px,calc(100% - 32px));
+  max-height:85vh;overflow-y:auto;
+  background:#2d2d2d;
+  border:3px solid #666;
+  border-top-color:#999;border-left-color:#999;
+  border-right-color:#222;border-bottom-color:#222;
+  border-radius:4px;
+  padding:20px;box-sizing:border-box;
+  box-shadow:0 24px 80px rgba(0,0,0,0.85);
+}
+.tabs-title{
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:2px solid #444;padding-bottom:10px;margin-bottom:14px;
+}
+.tabs-title h2{margin:0;font-size:22px;color:#fff;text-shadow:1px 1px 2px #000}
+.tabs-title button{background:#8a3a3a;border-color:#bb5555}
+.tabs-title button:hover{background:#aa4444}
+
+.inventory-grid{
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;
+}
+.inv-item{
+  min-height:84px;background:#383838;
+  border:2px solid #555;
+  border-top-color:#777;border-left-color:#777;
+  border-right-color:#222;border-bottom-color:#222;
+  padding:8px;display:grid;place-items:center;text-align:center;
+  cursor:pointer;transition:transform 0.1s, background 0.15s;
+}
+.inv-item:hover,.recipe:hover,.mob-card:hover{
+  background:#4a4a4a;transform:translateY(-2px);
+}
+.big-swatch{
+  width:36px;height:36px;
+  border:2px solid #fff;
+  box-shadow:2px 2px 4px rgba(0,0,0,0.5);
+}
+.tool-icon{font-size:28px}
+.inv-item b{font-size:11px;color:#eee;text-shadow:1px 1px 2px #000}
+
+.craft-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px;
+}
+.recipe{
+  min-height:84px;background:#383838;
+  border:2px solid #555;
+  border-top-color:#777;border-left-color:#777;
+  border-right-color:#222;border-bottom-color:#222;
+  display:flex;flex-direction:column;justify-content:center;gap:6px;padding:10px;
+  text-align:left;
+}
+.recipe span{font-size:12px;color:#cfcfcf}
+.craft-ready{color:var(--mc-green);font-weight:bold}
+.craft-missing{color:var(--mc-red)}
+.recipe[disabled]{opacity:0.45;cursor:not-allowed}
+
+.mob-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px;
+}
+.mob-card{
+  background:#383838;
+  border:2px solid #555;
+  border-top-color:#777;border-left-color:#777;
+  border-right-color:#222;border-bottom-color:#222;
+  padding:12px;display:grid;gap:6px;place-items:center;
+}
+.mob-face{width:46px;height:46px;border:2px solid #fff}
+
+/* ---------- TOAST / VIDA / EFECTOS ---------- */
+#toast{
+  position:fixed;top:18px;left:50%;
+  transform:translate(-50%,-12px);
+  padding:10px 18px;
+  background:rgba(18,18,18,0.92);
+  border:2px solid #666;
+  border-radius:4px;
+  color:#ffff55;font-weight:bold;
+  font-size:15px;
+  text-shadow:1px 1px 2px #000;
+  opacity:0;transition:0.18s;z-index:60;pointer-events:none;
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+#dmgFlash{
+  position:fixed;inset:0;
+  background:radial-gradient(ellipse at center,rgba(200,20,20,0) 40%,rgba(180,10,10,0.6) 100%);
+  opacity:0;pointer-events:none;transition:opacity 0.12s;z-index:9;
+}
+#dmgFlash.show{opacity:1}
+.hearts{font-size:16px;letter-spacing:2px;color:#ff3333;text-shadow:0 0 3px #000}
+
+/* ---------- NPC DIALOG ---------- */
+.npc-dialog{
+  max-width:760px;margin:auto;text-align:left;
+  background:#262626;padding:18px;
+  border:2px solid #555;border-radius:4px;
+}
+.npc-dialog p{line-height:1.6}
+.npc-quest{
+  margin-top:14px;padding:12px 14px;
+  border-left:4px solid var(--mc-green);
+  background:rgba(85,255,85,0.08);border-radius:4px;
+}
+
+@media(max-width:850px){
+  .mode-choice{grid-template-columns:1fr}
+  .inventory-grid{grid-template-columns:repeat(3,1fr)}
+  .craft-grid{grid-template-columns:1fr 1fr}
+  .mob-grid{grid-template-columns:repeat(2,1fr)}
+  .slot{width:46px;height:48px}
+  .slot small{display:none}
+}
